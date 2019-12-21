@@ -84,7 +84,9 @@ public class MainActivity extends AppCompatActivity {
         list.add(new TimelineData("Cherthala", 100,0));
         list.add(new TimelineData("Kvm hospital", 100,1));
         list.add(new TimelineData("Mathilakam", 100,1));
-        list.add(new TimelineData("11th Mile", 20,2));
+        list.add(new TimelineData("11th Mile", 50,2));
+        list.add(new TimelineData("bhajanamadam", 0,3));
+        list.add(new TimelineData("pallikkavala", 0,3));
         RecyclerviewAdapter adapter = new RecyclerviewAdapter(list);
         recyclerView.setLayoutManager(lm);
         recyclerView.setAdapter(adapter);

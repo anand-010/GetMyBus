@@ -78,8 +78,13 @@ public class Timeline extends View {
             case  2:{
                 Path shape = RoundedRect(0,0,Width,heitht,Width/2,Width/2,false,false,true,true);
                 canvas.drawPath(shape,paint);
-                canvas.drawBitmap(bitmap,null,rect,paint);
+                canvas.drawCircle(Width/2,15,(Width/2)-2,paint_fill);
+                canvas.drawBitmap(checked,null,rect,paint);
+
                 break;
+            }
+            case 3:{
+                canvas.drawCircle(Width/2,15,(Width/2)-2,paint_fill);
             }
         }
 //        if (height_pix==100){
