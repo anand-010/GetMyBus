@@ -1,27 +1,25 @@
 package com.example.getmybus;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
-
-import androidx.annotation.DrawableRes;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.getmybus.Recyclerview_bus_details.BusAdapter;
+import com.example.getmybus.Recyclerview_bus_details.Busdata;
+import com.example.getmybus.Recyclerview_bus_details.RecyclerviewAdapterBus;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -64,6 +62,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        LinearLayoutManager lm = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+        //TODO recycler view calculation from the database
+//      for(int i=0;i<=percent)
+        ArrayList<Busdata> list= new ArrayList<>();
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+        final BusAdapter adapter = new BusAdapter(list);
+        recyclerView.setLayoutManager(lm);
+        recyclerView.setAdapter(adapter);
     }
 
 //    private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {

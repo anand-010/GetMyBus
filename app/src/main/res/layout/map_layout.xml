@@ -6,7 +6,7 @@
     android:id="@+id/sliding_panel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    app:dragView="@id/drag_view"
     app:orientation="vertical"
     app:nonSlidingView="@id/non_sliding_view"
     app:slidingView="@id/sliding_view"
@@ -18,63 +18,79 @@
         android:layout_height="match_parent"
         xmlns:tools="http://schemas.android.com/tools"
         tools:context=".MapsActivity"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="100dp"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
-
     <LinearLayout
         android:background="#fff"
         android:id="@+id/sliding_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-        <LinearLayout
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp">-->
+<!--            <LinearLayout-->
+<!--                android:layout_marginLeft="20dp"-->
+<!--                android:layout_weight="50"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+<!--                <TextView-->
+
+<!--                    android:id="@+id/textView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="ALP -> CTLA"-->
+<!--                    android:textSize="25dp"-->
+<!--                    android:textColor="#1A81CB"/>-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="KL0485622"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:textColor="#1A81CB"/>-->
+<!--            </LinearLayout>-->
+<!--            <LinearLayout-->
+<!--                android:layout_marginRight="20dp"-->
+<!--                android:layout_marginLeft="20dp"-->
+<!--                android:layout_weight="50"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+<!--                <TextView-->
+<!--                    android:textColor="#1A81CB"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="2.6 Min"-->
+<!--                    android:textSize="25dp" />-->
+
+<!--                <TextView-->
+<!--                    android:textColor="#1A81CB"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="To mathilakam"-->
+<!--                    android:textSize="20dp" />-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
-            <LinearLayout
-                android:layout_marginLeft="20dp"
-                android:layout_weight="50"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_menu_black_24dp"
+                android:background="#E6E5E5"
+                android:id="@+id/drag_view"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="60dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
+                android:id="@+id/recycler_view"/>
+        </RelativeLayout>
 
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ALP -> CTLA"
-                    android:textSize="25dp"
-                    android:textColor="#1A81CB"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="KL0485622"
-                    android:textSize="20dp"
-                    android:textColor="#1A81CB"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="50"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:textColor="#1A81CB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2.6 Min"
-                    android:textSize="25dp" />
-
-                <TextView
-                    android:textColor="#1A81CB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="To mathilakam"
-                    android:textSize="20dp" />
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
 
 </com.psoffritti.slidingpanel.SlidingPanel>

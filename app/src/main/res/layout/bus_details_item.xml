@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="100dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <LinearLayout
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="50"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/src_dest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ALP -> CTLA"
+                        android:textSize="25dp"
+                        android:textColor="#1A81CB"/>
+                    <TextView
+                        android:id="@+id/bus_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="KL0485622"
+                        android:textSize="20dp"
+                        android:textColor="#1A81CB"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="50"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/exp_time"
+                        android:textColor="#1A81CB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2.6 Min"
+                        android:textSize="25dp" />
+
+                    <TextView
+                        android:id="@+id/location"
+                        android:textColor="#1A81CB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="To mathilakam"
+                        android:textSize="20dp" />
+                </LinearLayout>
+            </LinearLayout>
+</LinearLayout>
