@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         xmlns:tools="http://schemas.android.com/tools"
         tools:context=".MapsActivity"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="75dp"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
     <LinearLayout
         android:background="#fff"
