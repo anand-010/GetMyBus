@@ -11,12 +11,12 @@
     android:orientation="vertical">
 
     <TextView
-        android:text="laltitude"
+        android:text="last time pos"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/longitude"/>
     <TextView
-        android:text="laltitude"
+        android:text="real time pos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/laltitude"/>

@@ -94,13 +94,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Access a Cloud Firestore instance from your Activity
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // Create a new user with a first, middle, and last name
+//        // Create a new user with a first, middle, and last name
         final Map<String, Object> user = new HashMap<>();
         user.put("first", "Alan");
         user.put("middle", "Mathison");
         user.put("last", "Turing");
         user.put("born", 1912);
-
+//
 // Add a new document with a generated ID
 //        db.collection("users")
 //                .add(user)
