@@ -2,6 +2,8 @@ package com.example.getmybus;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,9 +15,9 @@ public class SplashActivity extends AppIntro implements SliderFragment.OnFragmen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SliderFragment fragment = new SliderFragment();
-        SliderFragment fragment1 = new SliderFragment();
-        SliderFragment fragment2 = new SliderFragment();
+        SliderFragment fragment = new SliderFragment(1);
+        SliderFragment fragment1 = new SliderFragment(2);
+        SliderFragment fragment2 = new SliderFragment(3);
         addSlide(fragment);
         addSlide(fragment1);
         addSlide(fragment2);
@@ -42,12 +44,14 @@ public class SplashActivity extends AppIntro implements SliderFragment.OnFragmen
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         // Do something when users tap on Skip button.
+        startActivity(new Intent(this,Front_activity.class));
     }
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         // Do something when users tap on Done button.
+        startActivity(new Intent(this,Front_activity.class));
     }
 
     @Override

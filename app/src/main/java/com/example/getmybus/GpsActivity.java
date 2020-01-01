@@ -213,7 +213,7 @@ public void onMapReady(GoogleMap googleMap) {
     list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
     list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
     list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-    final BusAdapter adapter = new BusAdapter(list);
+    final BusAdapter adapter = new BusAdapter(this,list);
     recyclerView.setLayoutManager(lm);
     recyclerView.setAdapter(adapter);
 }

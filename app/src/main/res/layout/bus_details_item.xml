@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="100dp">
             <LinearLayout
+                android:id="@+id/bus_item"
                 android:layout_width="match_parent"
                 android:layout_height="100dp">
                 <LinearLayout

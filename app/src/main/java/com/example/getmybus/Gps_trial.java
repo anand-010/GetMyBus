@@ -54,7 +54,7 @@ public class Gps_trial extends AppCompatActivity{
         String TAG = Gps_trial.class.getSimpleName();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String apiKey = getString(R.string.map_key);
+        String apiKey = "AIzaSyArFg0Rrt3sKxxilI7xsy6N5h85TYJ16TM";
         if(apiKey.isEmpty()){
 //            responseView.setText(getString(R.string.error));
             return;
