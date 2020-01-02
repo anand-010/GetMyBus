@@ -53,8 +53,8 @@ public class Gps_trial extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         String TAG = Gps_trial.class.getSimpleName();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        String apiKey = "AIzaSyArFg0Rrt3sKxxilI7xsy6N5h85TYJ16TM";
+        setContentView(R.layout.location_test);
+        String apiKey = "AIzaSyBPXDQ1v9trRcL7df0KRor2yEUbbDoroKs";
         if(apiKey.isEmpty()){
 //            responseView.setText(getString(R.string.error));
             return;
@@ -66,7 +66,28 @@ public class Gps_trial extends AppCompatActivity{
         }
 
         placesClient = Places.createClient(this);
-        initAutoCompleteTextView();
+        // Initialize the AutocompleteSupportFragment.
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+// Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+
+// Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+//        initAutoCompleteTextView();
 //        t1 = findViewById(R.id.longitude);
 //        t2 = findViewById(R.id.laltitude);
 //
@@ -145,56 +166,56 @@ public class Gps_trial extends AppCompatActivity{
 //            AlertDialog alert = alertDialogBuilder.create();
 //            alert.show();
         }
-    private void initAutoCompleteTextView() {
-
-        autoCompleteTextView = findViewById(R.id.auto);
-        autoCompleteTextView.setThreshold(1);
-        autoCompleteTextView.setOnItemClickListener(autocompleteClickListener);
-        adapter = new AutoCompleteAdapter(this, placesClient);
-        autoCompleteTextView.setAdapter(adapter);
-    }
-    private AdapterView.OnItemClickListener autocompleteClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-            try {
-                final AutocompletePrediction item = adapter.getItem(i);
-                String placeID = null;
-                if (item != null) {
-                    placeID = item.getPlaceId();
-                }
-
-//                To specify which data types to return, pass an array of Place.Fields in your FetchPlaceRequest
-//                Use only those fields which are required.
-
-                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS
-                        , Place.Field.LAT_LNG);
-
-                FetchPlaceRequest request = null;
-                if (placeID != null) {
-                    request = FetchPlaceRequest.builder(placeID, placeFields)
-                            .build();
-                }
-
-                if (request != null) {
-                    placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onSuccess(FetchPlaceResponse task) {
-//                            responseView.setText(task.getPlace().getName() + "\n" + task.getPlace().getAddress());
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            e.printStackTrace();
-//                            responseView.setText(e.getMessage());
-                        }
-                    });
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-    };
+//    private void initAutoCompleteTextView() {
+//
+//        autoCompleteTextView = findViewById(R.id.auto);
+//        autoCompleteTextView.setThreshold(1);
+//        autoCompleteTextView.setOnItemClickListener(autocompleteClickListener);
+//        adapter = new AutoCompleteAdapter(this, placesClient);
+//        autoCompleteTextView.setAdapter(adapter);
+//    }
+//    private AdapterView.OnItemClickListener autocompleteClickListener = new AdapterView.OnItemClickListener() {
+//        @Override
+//        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//            try {
+//                final AutocompletePrediction item = adapter.getItem(i);
+//                String placeID = null;
+//                if (item != null) {
+//                    placeID = item.getPlaceId();
+//                }
+//
+////                To specify which data types to return, pass an array of Place.Fields in your FetchPlaceRequest
+////                Use only those fields which are required.
+//
+//                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS
+//                        , Place.Field.LAT_LNG);
+//
+//                FetchPlaceRequest request = null;
+//                if (placeID != null) {
+//                    request = FetchPlaceRequest.builder(placeID, placeFields)
+//                            .build();
+//                }
+//
+//                if (request != null) {
+//                    placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
+//                        @SuppressLint("SetTextI18n")
+//                        @Override
+//                        public void onSuccess(FetchPlaceResponse task) {
+////                            responseView.setText(task.getPlace().getName() + "\n" + task.getPlace().getAddress());
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            e.printStackTrace();
+////                            responseView.setText(e.getMessage());
+//                        }
+//                    });
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    };
 }
