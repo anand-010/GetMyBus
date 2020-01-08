@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.psoffritti.slidingpanel.PanelState;
+import com.psoffritti.slidingpanel.SlidingPanel;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -44,17 +51,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationCallback locationCallback;
     private int locationRequestCode = 1000;
     private double wayLatitude = 0.0, wayLongitude = 0.0;
+    SlidingPanel slidingPanel;
+    ImageView slider;
 //    TextView alt,lon;
     Double alt,lon;
+    Boolean pannel_state;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pannel_state = false;
         setContentView(R.layout.map_layout);
         setupGps();
+        slider = findViewById(R.id.drag_view);
+        slidingPanel = findViewById(R.id.sliding_panel);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.non_sliding_view);
+        slidingPanel.addSlideListener(new SlidingPanel.OnSlideListener() {
+            @Override
+            public void onSlide(@NotNull SlidingPanel slidingPanel, @NotNull PanelState panelState, float v) {
+                if (panelState == PanelState.COLLAPSED){
+                    pannel_state = false;
+                }
+                else {
+                    pannel_state = true;
+                }
+            }
+        });
         mapFragment.getMapAsync(this);
+        slider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!pannel_state){
+                    slidingPanel.slideTo(PanelState.EXPANDED);
+                }
+                else{
+                    slidingPanel.slideTo(PanelState.COLLAPSED);
+                }
+
+            }
+        });
     }
 
     @Override

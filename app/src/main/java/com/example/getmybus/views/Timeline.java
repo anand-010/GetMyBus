@@ -1,4 +1,4 @@
-package com.example.getmybus;
+package com.example.getmybus.views;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+
+import com.example.getmybus.R;
 
 public class Timeline extends View {
     int Width, heitht,height_pix,state;
@@ -46,7 +48,7 @@ public class Timeline extends View {
 
 //        heitht = canvas.getHeight()/2;
         super.onDraw(canvas);
-        Width = 30;
+        Width = canvas.getWidth();
         heitht = height_pix*canvas.getHeight()/100;
 //        RectF rect = new RectF(10, 10, Width, heitht);
         Paint paint = new Paint();
@@ -63,28 +65,38 @@ public class Timeline extends View {
 //        canvas.drawRect(rect, paint);
         switch (state){
             case 0:{
-                Path shape = RoundedRect(0,0,Width,heitht,Width/2,Width/2,true,true,false,false);
-                canvas.drawPath(shape,paint);
-                canvas.drawCircle(Width/2,15,(Width/2)-2,paint_fill);
+//                Path shape = RoundedRect(0,0,Width,heitht,Width/2,Width/2,true,true,false,false);
+//                canvas.drawPath(shape,paint);
+                canvas.drawRect(0,Width/2,Width, heitht,paint);
+                canvas.drawCircle(Width/2,Width/2,Width/2,paint);
+                canvas.drawCircle(Width/2,heitht,Width/2,paint);
+                canvas.drawCircle(Width/2,Width/2-1,(Width/2)-2,paint_fill);
                 canvas.drawBitmap(checked,null,rect,paint);
                 break;
             }
             case 1:{
                 canvas.drawRect(0,0,Width, heitht,paint);
-                canvas.drawCircle(Width/2,15,(Width/2)-2,paint_fill);
+                canvas.drawCircle(Width/2,Width/2-1,(Width/2)-2,paint_fill);
                 canvas.drawBitmap(checked,null,rect,paint);
                 break;
             }
             case  2:{
                 Path shape = RoundedRect(0,0,Width,heitht,Width/2,Width/2,false,false,true,true);
                 canvas.drawPath(shape,paint);
-                canvas.drawCircle(Width/2,15,(Width/2)-2,paint_fill);
+                canvas.drawCircle(Width/2,Width/2-1,(Width/2)-2,paint_fill);
                 canvas.drawBitmap(checked,null,rect,paint);
-
                 break;
             }
-            case 3:{
-                canvas.drawCircle(Width/2,15,(Width/2)-2,paint_fill);
+            case  3:{
+//                Path shape = RoundedRect(0,0,Width,heitht,Width/2,Width/2,false,false,true,true);
+//                canvas.drawPath(shape,paint);
+                canvas.drawRect(0,0,Width, heitht,paint);
+                canvas.drawCircle(Width/2,heitht,Width/2,paint);
+                canvas.drawCircle(Width/2,Width/2-1,(Width/2)-2,paint_fill);
+                break;
+            }
+            case 4:{
+                canvas.drawCircle(Width/2,Width/2-1,(Width/2)-2,paint_fill);
             }
         }
 //        if (height_pix==100){

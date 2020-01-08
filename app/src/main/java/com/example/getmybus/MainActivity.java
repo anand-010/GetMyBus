@@ -29,7 +29,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -140,35 +142,57 @@ public class MainActivity extends AppCompatActivity {
         final RecyclerviewAdapter adapter = new RecyclerviewAdapter(list);
         recyclerView.setLayoutManager(lm);
         recyclerView.setAdapter(adapter);
-
         // Access a Cloud Firestore instance from your Activity
-        db.collection("bus_test")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("bus_test").document("WsCdTluxXcgIITYBxaWe")
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                document.getData().putAll(user);
-                                Log.d(TAG, "onComplete: "+document.getLong("id"));
-                                long js = document.getLong("percent");
-                                int num = Integer.parseInt(String.valueOf(js));
-                                list.clear();
-                                for(int place=0;place<num/100;place++){
-                                    if (place==0)
-                                        list.add(new TimelineData("Cherthala", 100,0));
-                                    else if (place==(num/100)-1)
-                                        list.add(new TimelineData("pallikkavala", num%100,2));
-                                    else
-                                        list.add(new TimelineData("Mathilakam", 100,1));
-                                    adapter.notifyDataSetChanged();
+                    public void onEvent(@Nullable DocumentSnapshot document, @Nullable FirebaseFirestoreException e) {
+                            List<String> stops = (List<String>) document.get("routes");
+                            List<String> times = (List<String>) document.get("times");
+//                            Map<String, String> place_info = (Map<String, String>) document.get("place_info");
+//                            for (Map.Entry<String,String> entry : place_info.entrySet()){
+//                                stops.add(entry.getKey());
+//                                times.add(entry.getValue());
+//                            }
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                            document.getData().putAll(user);
+                            Log.d(TAG, "onComplete: "+document.getLong("id"));
+                            long js = document.getLong("percent");
+                            int num = Integer.parseInt(String.valueOf(js));
+                            num = num+100;
+                            list.clear();
+                            int place=0;
+                            for(place=0;place<num/100;place++){
+                                if (place==0){
+                                    if (1 == num/100){
+                                        list.add(new TimelineData(stops.get(place),times.get(place), num%100,0));
+                                    }
+                                    else {
+                                        list.add(new TimelineData(stops.get(place),times.get(place), 100,0));
+                                    }
+                                }
+
+                                else if (place==(num/100)-1){
+                                    if (num%100+1>80) {
+                                        Toast.makeText(MainActivity.this,String.valueOf(num),Toast.LENGTH_SHORT).show();
+                                        list.add(new TimelineData(stops.get(place),times.get(place), 100,1));
+                                        place++;
+                                        num= num+20;
+                                        Toast.makeText(MainActivity.this,String.valueOf(num%100),Toast.LENGTH_SHORT).show();
+                                        list.add(new TimelineData(stops.get(place),times.get(place), (num%100)/2,3));
+                                    } else{
+                                        list.add(new TimelineData(stops.get(place),times.get(place), (num%100)+20,2));
+                                    }
+                                }
+                                else {
+                                    list.add(new TimelineData(stops.get(place),times.get(place), 100,1));
                                 }
                             }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
+                            for (place = place;place<stops.size();place++){
+                                list.add(new TimelineData(stops.get(place),times.get(place) ,100,4));
+                            }
+                            adapter.notifyDataSetChanged();
                         }
-                    }
                 });
         }
 

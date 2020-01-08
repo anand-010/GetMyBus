@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.getmybus.R;
-import com.example.getmybus.Timeline;
+import com.example.getmybus.views.Timeline;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +34,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         holder.timeline_position.setHight(datas.get(position).getTimeline_pos());
         holder.timeline_position.setState(datas.get(position).getTimeline_state());
         holder.places.setText(datas.get(position).getLocation());
+        holder.time_view.setText(datas.get(position).getTime());
     }
 
     @Override
@@ -42,10 +43,11 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView places;
+        TextView places,time_view;
         Timeline timeline_position;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            time_view = itemView.findViewById(R.id.time_view);
             timeline_position = itemView.findViewById(R.id.timeline);
             places = itemView.findViewById(R.id.Place);
 

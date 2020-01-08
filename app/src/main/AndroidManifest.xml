@@ -23,16 +23,16 @@
             android:name="com.king.zxing.CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CaptureTheme"/>
-        <activity android:name=".Gps_trial">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapsActivity"/>
         <activity android:name=".Front_activity"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".log_reg.LoginActivity"/>
+        <activity android:name=".MapsActivity"/>
         <activity android:name=".GpsActivity"/>
         <activity android:name=".TestActivity"/>
         <activity android:name=".QrcodeActivity"/>

@@ -4,8 +4,9 @@
     android:layout_height="match_parent">
 
 <androidx.recyclerview.widget.RecyclerView
+    android:overScrollMode="never"
     android:layout_marginBottom="70dp"
-    android:padding="50dp"
+    android:padding="5dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/recycler_view"/>

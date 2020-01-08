@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
                 android:layout_marginTop="20dp"
-                android:background="#4F90CB"
+                android:background="@drawable/serch_background"
                 android:weightSum="100">
 <!--                <EditText-->
 <!--                    android:descendantFocusability="beforeDescendants"-->
@@ -49,12 +49,18 @@
 <!--                    android:textSize="30dp"-->
 <!--                    android:textColorHint="#A8FFFFFF"-->
 <!--                    android:layout_weight="80"/>-->
-                <AutoCompleteTextView
-                    android:id="@+id/auto"
+                <EditText
+                    android:elevation="6dp"
+                    android:descendantFocusability="beforeDescendants"
+                    android:focusableInTouchMode="true"
                     android:layout_width="match_parent"
                     android:layout_height="57dp"
-                    android:maxLines="1"
-                    android:hint="enter_location" />
+                    android:background="#00000000"
+                    android:hint="From : source"
+                    android:paddingLeft="20dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30dp"
+                    android:textColorHint="#A8FFFFFF"/>
                 <ImageView
                     android:padding="10dp"
                     android:id="@+id/gps_btn"
@@ -75,27 +81,30 @@
                 android:textColor="#50ABDE"
                 android:textSize="20dp"
                 />
+
             <EditText
-                android:descendantFocusability="beforeDescendants"
-                android:focusableInTouchMode="true"
+                android:elevation="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
                 android:layout_marginTop="20dp"
-                android:background="#4F90CB"
+                android:background="@drawable/serch_background"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true"
                 android:hint="To : destination"
                 android:paddingLeft="20dp"
                 android:textColor="#FFFFFF"
-                android:textSize="30dp"
-                android:textColorHint="#A8FFFFFF"/>
+                android:textColorHint="#A8FFFFFF"
+                android:textSize="30dp" />
 
             <HorizontalScrollView
+                android:elevation="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:background="#4F90CB"
+                android:background="@drawable/serch_background"
                 android:paddingLeft="10dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:paddingRight="10dp">
 
                 <LinearLayout
@@ -105,6 +114,7 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:elevation="30dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#6AA7DF"
@@ -113,6 +123,7 @@
                         android:layout_weight="25"/>
 
                     <Button
+                        android:elevation="30dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#004F90CB"
@@ -121,6 +132,7 @@
                         android:layout_weight="25"/>
 
                     <Button
+                        android:elevation="30dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#004F90CB"
@@ -129,6 +141,7 @@
                         android:layout_weight="25"/>
 
                     <Button
+                        android:elevation="30dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#004F90CB"
@@ -150,6 +163,7 @@
             android:minHeight="300dp">
 
             <ScrollView
+                android:background="#CDA6BCE4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -165,10 +179,11 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="57dp"
-                        android:background="#BECBD6"
+                        android:background="@drawable/background_history_recycler"
                         android:weightSum="100">
 
                         <TextView
+                            android:fontFamily="Poppins-Bold"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="25"
@@ -193,7 +208,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="57dp"
                         android:layout_marginTop="10dp"
-                        android:background="#BECBD6"
+                        android:background="@drawable/background_history_recycler"
                         android:weightSum="100">
 
                         <TextView
@@ -221,7 +236,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="57dp"
                         android:layout_marginTop="10dp"
-                        android:background="#BECBD6"
+                        android:background="@drawable/background_history_recycler"
                         android:weightSum="100">
 
                         <TextView
@@ -249,7 +264,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="57dp"
                         android:layout_marginTop="10dp"
-                        android:background="#BECBD6"
+                        android:background="@drawable/background_history_recycler"
                         android:weightSum="100">
 
                         <TextView
@@ -278,7 +293,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="57dp"
                         android:layout_marginTop="10dp"
-                        android:background="#BECBD6"
+                        android:background="@drawable/background_history_recycler"
                         android:weightSum="100">
 
                         <TextView

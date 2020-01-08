@@ -55,6 +55,7 @@
                     android:textSize="13.3sp" />
 
                 <EditText
+                    android:id="@+id/email_regiter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -80,6 +81,7 @@
                     android:textSize="13.3sp" />
 
                 <EditText
+                    android:id="@+id/password_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11.7dp"
@@ -122,7 +124,7 @@
                     android:layout_height="48dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="30dp"
-                    android:src="@drawable/yellow_linkedin" />
+                    android:src="@drawable/google_white" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -140,18 +142,20 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/contiue_register"
                     android:layout_marginRight="20dp"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.4"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
 
                     <ImageView
+                        android:layout_gravity="top"
                         android:layout_width="18.7dp"
                         android:layout_height="15.3dp"
-                        android:src="@drawable/back_arrow" />
+                        android:src="@drawable/black_arrow" />
 
                 </LinearLayout>
 
@@ -171,6 +175,7 @@
 
 
         <LinearLayout
+            android:id="@+id/goto_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -198,4 +203,43 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:visibility="visible"
+        android:padding="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/goto_login"
+        android:orientation="vertical"
+        android:background="#8EEB8E"
+        tools:ignore="NotSibling">
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/google_white"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Varify your email"
+            android:textSize="20dp"
+            android:textColor="#000"/>
+        <TextView
+            android:layout_marginBottom="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Anands9288907423@gmail.com"
+            android:textSize="15dp"
+            android:textColor="#000"/>
+        <TextView
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:background="#3CFFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm and send varificatioin to your mail"/>
+    </LinearLayout>
 </RelativeLayout>
