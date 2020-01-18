@@ -49,7 +49,9 @@
 <!--                    android:textSize="30dp"-->
 <!--                    android:textColorHint="#A8FFFFFF"-->
 <!--                    android:layout_weight="80"/>-->
-                <EditText
+                <TextView
+                    android:id="@+id/src_act_main"
+                    android:gravity="center_vertical"
                     android:elevation="6dp"
                     android:descendantFocusability="beforeDescendants"
                     android:focusableInTouchMode="true"
@@ -82,7 +84,9 @@
                 android:textSize="20dp"
                 />
 
-            <EditText
+            <TextView
+                android:id="@+id/dest_act_main"
+                android:gravity="center_vertical"
                 android:elevation="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
