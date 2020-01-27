@@ -2,6 +2,8 @@ package com.example.getmybus;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.net.Uri;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,11 +25,13 @@ import com.example.getmybus.Recyclerview_bus_details.BusAdapter;
 import com.example.getmybus.Recyclerview_bus_details.Busdata;
 import com.example.getmybus.Recyclerview_bus_details.RecyclerviewAdapterBus;
 import com.example.getmybus.data.ListData;
+import com.example.getmybus.helper.DatabaseHelperRoute;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,7 +41,18 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.RoundCap;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.psoffritti.slidingpanel.PanelState;
@@ -108,63 +124,59 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-        String url = "https://getmybus.herokuapp.com?waypoints=";
-        OkHttpClient okHttpClient = new OkHttpClient();
-        List<String> coordinates= ListData.getMylist();
-//        List<String> coordinates= new ArrayList<>();
-//        coordinates.add("13.43041");coordinates.add("52.51085");coordinates.add("13.42467");coordinates.add("52.50881");coordinates.add("13.42024");coordinates.add("52.50698");
-        boolean first_tiem = true;
-        for (int i=0;i<coordinates.size();i=i+2){
-            if (first_tiem){
-                url = url.concat(coordinates.get(i)+","+coordinates.get(i+1));
-                first_tiem=false;
-            }
-            else {
-                url = url.concat(";"+coordinates.get(i)+","+coordinates.get(i+1));
-            }
-        }
-        Toast.makeText(this,url,Toast.LENGTH_LONG).show();
-        Log.d("tag", "onCreate: "+url);
-        Request request = new Request.Builder()
-                .url(url).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-//                Toast.makeText(MapsActivity.this,"oh bad",Toast.LENGTH_SHORT).show();
-                Log.d("df", "onFailure: "+request.toString());
-            }
 
-            @Override
-            public void onResponse(Response response) throws IOException {
-//                Toast.makeText(MapsActivity.this,response.toString(),Toast.LENGTH_SHORT).show();
-                String out = response.body().string();
-                Log.d("df", "onResponse: "+out);
-                try {
-                    JSONObject object = new JSONObject(out);
-                    JSONArray jsonArray = object.getJSONArray("coordinates");
-                    polylineOptions = new PolylineOptions();
 
-                    for (int i = 0;i<jsonArray.length();i++){
-                        lat = (Double) jsonArray.getJSONArray(i).get(0);
-                        lng = (Double) jsonArray.getJSONArray(i).get(1);
-                        polylineOptions.add(new LatLng(lng,lat));
-                    }
-                    Log.d("odada", "onResponse: "+jsonArray.get(0).toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<GeoPoint> routepoints = new ArrayList<>();
+                            List<GeoPoint> stopspoints = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("tag", document.getId() + " => " + document.getData());
+                                routepoints = (List<GeoPoint>) document.getData().get("route");
+                                stopspoints = (List<GeoPoint>) document.getData().get("stops");
+
+                            }
+                            polylineOptions = new PolylineOptions();
+                            Toast.makeText(MapsActivity.this,"val"+String.valueOf(routepoints.size()),Toast.LENGTH_SHORT).show();
+                            for (GeoPoint gp: routepoints){
+                                polylineOptions.add(new LatLng(gp.getLatitude(),gp.getLongitude()));
+                            }
+                            for (GeoPoint gp: stopspoints){
+                                mMap.addMarker(new MarkerOptions().position(new LatLng(gp.getLatitude(),gp.getLongitude())));
+                            }
+                            Polyline options = mMap.addPolyline(polylineOptions);
+                                    options.setWidth(6);
+                                    options.setColor(0xff34cceb);
+                                    options.setStartCap(new RoundCap());
+                                    options.setEndCap(new RoundCap());
+                            CameraUpdate center=
+                                    CameraUpdateFactory.newLatLng(new LatLng(routepoints.get(0).getLatitude(),routepoints.get(0).getLongitude()));
+                            CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
+
+                            mMap.moveCamera(center);
+                            mMap.animateCamera(zoom);
+                        } else {
+                            Log.w("tag", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                Toast.makeText(MapsActivity.this,"clicked",Toast.LENGTH_SHORT).show();
                 mMap.addPolyline(polylineOptions);
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lng,lat)));
             }
         });
         mMap = googleMap;
