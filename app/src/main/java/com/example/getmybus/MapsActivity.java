@@ -46,6 +46,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.RoundCap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.collect.Maps;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -124,8 +125,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+//todo adding the ranking by making http request to the heroku server
+        String URL = "https://getmybus.herokuapp.com/?src="+getIntent().getStringExtra("query");
+        Log.d("is ready", "onCreate: "+URL);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(URL).build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+//                Toast.makeText(MapsActivity.this,"oh bad",Toast.LENGTH_SHORT).show();
+                Log.d("df", "onFailure: "+request.toString());
+            }
+            @Override
+            public void onResponse(Response response) throws IOException {
+//                Toast.makeText(MapsActivity.this,response.toString(),Toast.LENGTH_SHORT).show();
+                String out = response.body().string();
+                MapsActivity.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(MapsActivity.this,URL,Toast.LENGTH_SHORT).show();
+                        Log.d("TAG", "onResponse: "+out);
+                        Log.d("TAG", "onResponse: "+URL);
+                        Toast.makeText(MapsActivity.this,out,Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-
+//                String[] possible_bus_details = out.split(",");
+            }
+        });
     }
 
     @Override

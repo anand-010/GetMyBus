@@ -54,7 +54,7 @@ public class Front_activity extends AppCompatActivity implements LocationListene
     TextView src, dest;
     Point mydestination;
     Point mysource;
-    ImageView gps_btn;
+    ImageView gps_btn,continue_btn;
     private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
@@ -62,6 +62,7 @@ public class Front_activity extends AppCompatActivity implements LocationListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         gps_btn = findViewById(R.id.gps_btn);
+        continue_btn = findViewById(R.id.continue_front);
         Mapbox.getInstance(this, "pk.eyJ1IjoiYW5hbmQ5Mjg4IiwiYSI6ImNrNHk2dHJpdDA3dHEzZm82Y2hnY252cjEifQ.W-3fm0taJg_noVA_zzJO7g");
         src = findViewById(R.id.src_act_main);
         dest = findViewById(R.id.dest_act_main);
@@ -84,6 +85,29 @@ public class Front_activity extends AppCompatActivity implements LocationListene
                             .build(PlaceOptions.MODE_CARDS))
                     .build(Front_activity.this);
             startActivityForResult(intent, 11);
+        });
+        continue_btn.setOnClickListener(v -> {
+            if (mysource == null && mydestination == null){
+                Toast.makeText(this,"source and destination is not selected",Toast.LENGTH_SHORT).show();
+            }
+            else if (mysource == null){
+                Toast.makeText(this,"source is not selected",Toast.LENGTH_SHORT).show();
+            }
+            else if (mydestination == null){
+                Toast.makeText(this,"destination is not selected",Toast.LENGTH_SHORT).show();
+            }
+            else {
+                List<String> url = new ArrayList<>();
+                url.add(String.valueOf(mysource.latitude()));
+                url.add(String.valueOf(mysource.longitude()));
+                url.add(String.valueOf(mydestination.latitude()));
+                url.add(String.valueOf(mydestination.longitude()));
+                Intent i = new Intent(Front_activity.this,MapsActivity.class);
+                String query = String.valueOf(mysource.latitude()+","+mysource.longitude()+"&dest="+mydestination.latitude()+","+mydestination.longitude());
+                i.putExtra("query",query);
+                ListData.setMylist(url);
+                startActivity(i);
+            }
         });
         LinearLayout layout = findViewById(R.id.activity_last_item);
         layout.setOnClickListener(v -> startActivity(new Intent(Front_activity.this, MapsActivity.class)));
@@ -152,17 +176,6 @@ public class Front_activity extends AppCompatActivity implements LocationListene
             mysource = Point.fromLngLat(((Point) selectedCarmenFeature.geometry()).longitude(),
                     ((Point) selectedCarmenFeature.geometry()).latitude());
             src.setText(selectedCarmenFeature.placeName());
-            Toast.makeText(this,mysource.toString(),Toast.LENGTH_SHORT).show();
-            Log.d("get", "onResponse: "+mysource.toString());
-            List<String> url = new ArrayList<>();
-            url.add(String.valueOf(mysource.latitude()));
-            url.add(String.valueOf(mysource.longitude()));
-            url.add(String.valueOf(mydestination.latitude()));
-            url.add(String.valueOf(mydestination.longitude()));
-            Intent i = new Intent(Front_activity.this,MapsActivity.class);
-            ListData.setMylist(url);
-            startActivity(i);
-
             MapboxGeocoding reverseGeocode = MapboxGeocoding.builder()
                     .accessToken("pk.eyJ1IjoiYW5hbmQ5Mjg4IiwiYSI6ImNrNHk2dHJpdDA3dHEzZm82Y2hnY252cjEifQ.W-3fm0taJg_noVA_zzJO7g")
                     .query(mysource)
