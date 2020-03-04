@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.example.getmybus.Utils.GpsUtils;
 import com.example.getmybus.data.ListData;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -65,12 +67,19 @@ public class Front_activity extends AppCompatActivity implements LocationListene
         gps_btn = findViewById(R.id.gps_btn);
         continue_btn = findViewById(R.id.continue_front);
         //        adding shared prefference to main activity
-        SharedPreferences sharedPref = Front_activity.this.getPreferences(Context.MODE_PRIVATE);
-        boolean first_time = sharedPref.getBoolean("first", true);
-        if (first_time){
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("first", false);
-            editor.commit();
+//        SharedPreferences sharedPref = Front_activity.this.getPreferences(Context.MODE_PRIVATE);
+//        boolean first_time = sharedPref.getBoolean("first", true);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if ( user  == null){
+//            SharedPreferences.Editor editor = sharedPref.edit();
+//            editor.putBoolean("first", false);
+//            editor.commit();
+//            todo added for test
+            finish();
+            startActivity(new Intent(Front_activity.this, SplashActivity.class));
+        }
+        else if (!user.isEmailVerified()){
+            finish();
             startActivity(new Intent(Front_activity.this, SplashActivity.class));
         }
 

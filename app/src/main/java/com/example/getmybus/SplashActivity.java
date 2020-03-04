@@ -46,6 +46,7 @@ public class SplashActivity extends AppIntro implements SliderFragment.OnFragmen
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         // Do something when users tap on Skip button.
+        finish();
         startActivity(new Intent(this,LoginActivity.class));
     }
 
@@ -53,6 +54,7 @@ public class SplashActivity extends AppIntro implements SliderFragment.OnFragmen
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         // Do something when users tap on Done button.
+        finish();
         startActivity(new Intent(this, LoginActivity.class));
     }
 

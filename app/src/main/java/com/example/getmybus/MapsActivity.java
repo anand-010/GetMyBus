@@ -148,7 +148,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onResponse(Response response) throws IOException {
 //                Toast.makeText(MapsActivity.this,response.toString(),Toast.LENGTH_SHORT).show();
                 String out = response.body().string().trim();
-                String[] arrOfStr = out.split(",", 2);
+                String[] arrOfStr = out.split(",", 8);
 //                todo need to be access all the documents in this array
 //                todo then display it in the recycler view below
                 MapsActivity.this.runOnUiThread(new Runnable() {
@@ -157,13 +157,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Log.d("TAG", "onResponse: "+out);
                         Log.d("TAG", "onResponse: "+URL);
                         Toast.makeText(MapsActivity.this,out,Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(MapsActivity.this,"Length : "+String.valueOf(arrOfStr.length),Toast.LENGTH_SHORT).show();
                         FirebaseFirestore d = FirebaseFirestore.getInstance();
                         CollectionReference cr = d.collection("ride");
                         cr.addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 //                                Toast.makeText(MapsActivity.this,String.valueOf(queryDocumentSnapshots.size()),Toast.LENGTH_SHORT).show();
+                                if (queryDocumentSnapshots.size()>0)
+                                    list.clear();
                                 for (DocumentSnapshot ds : queryDocumentSnapshots.getDocuments()){
                                     String id = ds.getId().toString();
 //                                    Toast.makeText(MapsActivity.this,"id"+id,Toast.LENGTH_SHORT).show();
@@ -174,13 +176,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         if (id.equals(arrOfStr[i])) {
 //                                            Toast.makeText(MapsActivity.this,"equal",Toast.LENGTH_SHORT).show();
 //                                            todo add the stop details to the recycler list
-                                            list.clear();
                                             list.add(new Busdata("Test name", "720", "test time", "test loc", id));
                                             adapter.notifyDataSetChanged();
                                             GeoPoint gp = ds.getGeoPoint("position");
                                             BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.point_yellow);
                                             Bitmap b=bitmapdraw.getBitmap();
-                                            Bitmap smallMarker = Bitmap.createScaledBitmap(b, 30, 30, false);
+                                            Bitmap smallMarker = Bitmap.createScaledBitmap(b, 43, 57, false);
                                             if (marker == null){
                                                 marker = gooleMap.addMarker(new MarkerOptions().position(new LatLng(gp.getLatitude(),gp.getLongitude())).title("It's me").icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
                                             }
@@ -245,21 +246,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
                 });
-
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                Toast.makeText(MapsActivity.this,"clicked",Toast.LENGTH_SHORT).show();
-                mMap.addPolyline(polylineOptions);
-            }
-        });
         mMap = googleMap;
 
         // Add a marker in Sydney, Australia, and move the camera.
         LatLng sydney = new LatLng(-34, 151);
         int height = 57;
-        int width = 43;
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.point_yellow);
+        int width = 50;
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.person_loc);
         Bitmap b=bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 //        final Marker sydeney_marker = mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));

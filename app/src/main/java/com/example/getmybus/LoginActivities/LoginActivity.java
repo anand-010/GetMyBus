@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.btnSignup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
             }
         });
@@ -65,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                                             .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    finish();
                                                         startActivity(new Intent(LoginActivity.this, Front_activity.class));
                                                 }
                                             });

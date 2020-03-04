@@ -31,11 +31,14 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="57dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/serch_background"
                 android:weightSum="100">
                 <TextView
+
+                    android:paddingTop="9dp"
+                    android:paddingBottom="9dp"
                     android:layout_weight="100"
                     android:id="@+id/src_act_main"
                     android:gravity="center_vertical"
@@ -43,7 +46,7 @@
                     android:descendantFocusability="beforeDescendants"
                     android:focusableInTouchMode="true"
                     android:layout_width="0dp"
-                    android:layout_height="57dp"
+                    android:layout_height="wrap_content"
                     android:background="#00000000"
                     android:hint="From : source"
                     android:paddingLeft="20dp"
@@ -55,7 +58,7 @@
                     android:padding="10dp"
                     android:id="@+id/gps_btn"
                     android:layout_width="57dp"
-                    android:layout_height="57dp"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="5dp"
                     android:src="@drawable/gps" />
@@ -73,11 +76,13 @@
                 />
 
             <TextView
+                android:paddingTop="9dp"
+                android:paddingBottom="9dp"
                 android:id="@+id/dest_act_main"
                 android:gravity="center_vertical"
                 android:elevation="6dp"
                 android:layout_width="match_parent"
-                android:layout_height="57dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/serch_background"
                 android:descendantFocusability="beforeDescendants"

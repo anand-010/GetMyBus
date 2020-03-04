@@ -1,5 +1,6 @@
 package com.example.getmybus.LoginActivities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,7 +36,13 @@ public class SignupActivity extends AppCompatActivity {
         email = findViewById(R.id.editText);
         password = findViewById(R.id.editText2);
         password1 = findViewById(R.id.editText3);
-
+        findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+            }
+        });
         mAuth = FirebaseAuth.getInstance();
         goto_reg.setOnClickListener(new View.OnClickListener() {
             @Override
