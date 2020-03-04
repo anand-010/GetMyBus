@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+
+import com.example.getmybus.LoginActivities.LoginActivity;
 import com.example.getmybus.fragments.SliderFragment;
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
@@ -44,14 +46,14 @@ public class SplashActivity extends AppIntro implements SliderFragment.OnFragmen
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         // Do something when users tap on Skip button.
-        startActivity(new Intent(this,Front_activity.class));
+        startActivity(new Intent(this,LoginActivity.class));
     }
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         // Do something when users tap on Done button.
-        startActivity(new Intent(this,Front_activity.class));
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
     @Override

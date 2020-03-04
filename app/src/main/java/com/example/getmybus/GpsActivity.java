@@ -203,16 +203,16 @@ public void onMapReady(GoogleMap googleMap) {
     //TODO recycler view calculation from the database
 //      for(int i=0;i<=percent)
     ArrayList<Busdata> list= new ArrayList<>();
-    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+//    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+//    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+//    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+//    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+//    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+//    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+//    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+//    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+//    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
+//    list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
     final BusAdapter adapter = new BusAdapter(this,list);
     recyclerView.setLayoutManager(lm);
     recyclerView.setAdapter(adapter);

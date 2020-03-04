@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -63,6 +64,16 @@ public class Front_activity extends AppCompatActivity implements LocationListene
         setContentView(R.layout.activity_main);
         gps_btn = findViewById(R.id.gps_btn);
         continue_btn = findViewById(R.id.continue_front);
+        //        adding shared prefference to main activity
+        SharedPreferences sharedPref = Front_activity.this.getPreferences(Context.MODE_PRIVATE);
+        boolean first_time = sharedPref.getBoolean("first", true);
+        if (first_time){
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("first", false);
+            editor.commit();
+            startActivity(new Intent(Front_activity.this, SplashActivity.class));
+        }
+
         Mapbox.getInstance(this, "pk.eyJ1IjoiYW5hbmQ5Mjg4IiwiYSI6ImNrNHk2dHJpdDA3dHEzZm82Y2hnY252cjEifQ.W-3fm0taJg_noVA_zzJO7g");
         src = findViewById(R.id.src_act_main);
         dest = findViewById(R.id.dest_act_main);

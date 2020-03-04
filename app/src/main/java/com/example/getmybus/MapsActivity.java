@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.ColorSpace;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,11 +48,13 @@ import com.google.android.gms.maps.model.RoundCap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.collect.Maps;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.JsonArray;
@@ -74,7 +77,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+    Marker marker;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
     Marker sydeney_marker;
@@ -85,11 +88,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     SlidingPanel slidingPanel;
     ImageView slider;
     PolylineOptions polylineOptions;
+    ArrayList<Busdata> list= new ArrayList<>();
+    BusAdapter adapter;
 //    TextView alt,lon;
     Double alt,lon;
     Double lat;
     Double lng;
     Boolean pannel_state;
+    private GoogleMap gooleMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,13 +147,52 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onResponse(Response response) throws IOException {
 //                Toast.makeText(MapsActivity.this,response.toString(),Toast.LENGTH_SHORT).show();
-                String out = response.body().string();
+                String out = response.body().string().trim();
+                String[] arrOfStr = out.split(",", 2);
+//                todo need to be access all the documents in this array
+//                todo then display it in the recycler view below
                 MapsActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(MapsActivity.this,URL,Toast.LENGTH_SHORT).show();
                         Log.d("TAG", "onResponse: "+out);
                         Log.d("TAG", "onResponse: "+URL);
                         Toast.makeText(MapsActivity.this,out,Toast.LENGTH_SHORT).show();
+
+                        FirebaseFirestore d = FirebaseFirestore.getInstance();
+                        CollectionReference cr = d.collection("ride");
+                        cr.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                                Toast.makeText(MapsActivity.this,String.valueOf(queryDocumentSnapshots.size()),Toast.LENGTH_SHORT).show();
+                                for (DocumentSnapshot ds : queryDocumentSnapshots.getDocuments()){
+                                    String id = ds.getId().toString();
+//                                    Toast.makeText(MapsActivity.this,"id"+id,Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(MapsActivity.this,"ad"+out,Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(MapsActivity.this,String.valueOf(arrOfStr[0].length()),Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(MapsActivity.this,String.valueOf(id.length()),Toast.LENGTH_SHORT).show();
+                                    for (int i=0;i<arrOfStr.length;i++){
+                                        if (id.equals(arrOfStr[i])) {
+//                                            Toast.makeText(MapsActivity.this,"equal",Toast.LENGTH_SHORT).show();
+//                                            todo add the stop details to the recycler list
+                                            list.clear();
+                                            list.add(new Busdata("Test name", "720", "test time", "test loc", id));
+                                            adapter.notifyDataSetChanged();
+                                            GeoPoint gp = ds.getGeoPoint("position");
+                                            BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.point_yellow);
+                                            Bitmap b=bitmapdraw.getBitmap();
+                                            Bitmap smallMarker = Bitmap.createScaledBitmap(b, 30, 30, false);
+                                            if (marker == null){
+                                                marker = gooleMap.addMarker(new MarkerOptions().position(new LatLng(gp.getLatitude(),gp.getLongitude())).title("It's me").icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+                                            }
+                                            else {
+                                                marker.setPosition(new LatLng(gp.getLatitude(), gp.getLongitude()));
+                                            }
+//                                            Toast.makeText(MapsActivity.this,gp.toString(),Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+                            }
+                        });
                     }
                 });
 
@@ -157,6 +203,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        this.gooleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -238,18 +285,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LinearLayoutManager lm = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
         //TODO recycler view calculation from the database
 //      for(int i=0;i<=percent)
-        ArrayList<Busdata> list= new ArrayList<>();
-        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala"));
-        final BusAdapter adapter = new BusAdapter(this,list);
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala","test"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala","test"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala","test"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala","test"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala","test"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala","test"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala","test"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala","test"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala","test"));
+        list.add(new Busdata("ALP -> MUM","Kl0478","2.6 min","pallikkavala","test"));
+        adapter = new BusAdapter(this,list);
         recyclerView.setLayoutManager(lm);
         recyclerView.setAdapter(adapter);
     }

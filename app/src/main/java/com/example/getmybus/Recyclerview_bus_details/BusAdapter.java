@@ -39,7 +39,7 @@ public class BusAdapter extends RecyclerView.Adapter<BusAdapter.ViewHolder> {
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, MainActivity.class));
+                context.startActivity(new Intent(context, MainActivity.class).putExtra("id",data.get(position).getId()));
             }
         });
     }

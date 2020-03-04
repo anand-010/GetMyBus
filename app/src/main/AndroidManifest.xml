@@ -23,7 +23,7 @@
             android:name="com.king.zxing.CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CaptureTheme"/>
-        <activity android:name=".SplashActivity">
+        <activity android:name=".Front_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,12 +31,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".MapsActivity"/>
-        <activity android:name=".log_reg.LoginActivity"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".LoginActivities.LoginActivity"/>
+        <activity android:name=".LoginActivities.SignupActivity"/>
+        <activity android:name=".SplashActivity"/>
         <activity android:name=".GpsActivity"/>
         <activity android:name=".TestActivity"/>
         <activity android:name=".QrcodeActivity"/>
-        <activity android:name=".Front_activity"/>
+        <activity android:name=".MainActivity"/>
 <!--        <activity android:name=".Gps_trial"/>-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
